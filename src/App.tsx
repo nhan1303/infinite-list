@@ -1,10 +1,19 @@
 import React from "react";
-import { InfiniteList } from "@components";
+import UserListingPage from "@features/users/pages/ListingPage";
 
 function App() {
   return (
     <div className="App">
-      <InfiniteList />
+      <UserListingPage />
+      <div
+        id="measure-layer"
+        style={{
+          display: "block",
+          visibility: "hidden",
+          position: "absolute",
+          zIndex: -1,
+        }}
+      />
     </div>
   );
 }

@@ -26,3 +26,33 @@ export const throttle = (
     }, delay);
   };
 };
+
+export const setupSumHeight = (
+  heights: Record<number, number>,
+  defaultItemHeight?: number
+) => {
+  const caches: Record<number, number> = {};
+
+  const sumHeightThunk = (index: number): number => {
+    if (Object.values(heights).length === 0) {
+      return (index + 1) * (defaultItemHeight || 0);
+    }
+
+    if (index < 0) return 0;
+    if (index in caches) return caches[index];
+
+    const currentHeight = (heights[index as keyof typeof heights] ||
+      0) as number;
+
+    return (caches[index] = currentHeight + sumHeightThunk(index - 1));
+  };
+
+  return sumHeightThunk;
+};
+
+export const flushPromises = () => {
+  return new Promise(setImmediate);
+};
+
+export const getTypeOf = (value: any): string =>
+  Object.prototype.toString.call(value).slice(8, -1).toLowerCase();
